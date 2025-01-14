@@ -3,12 +3,13 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
-Route::view('/about', 'about')->name('about'); 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware('auth', 'verified')->group(function () {
+    Route::view('/', 'welcome')->name('home');
+    Route::view('/tabungan', 'tabungan')->name('tabungan');
+    Route::view('/report', 'report')->name('report'); 
+    Route::get('/dashboard', function () {
+        return view('dashboard');})->name('dashboard');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
