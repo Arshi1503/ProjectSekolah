@@ -18,7 +18,7 @@ public function index()
     $incomes = $reports->where('type', 'income');
     $expenses = $reports->where('type', 'expense');
 
-    return view('report', compact('reports', 'incomes', 'expenses'));
+    return view('reports.index', compact('reports', 'incomes', 'expenses'));
 }
 
     // Menampilkan form untuk menambahkan laporan baru
@@ -41,14 +41,16 @@ public function index()
             'amount' => $request->amount,
         ]);
 
-        return redirect()->route('reports.index')->with('success', 'Laporan berhasil ditambahkan.');
+        session()->flash('success', 'Laporan berhasil disimpan!');
+
+        return redirect()->route('reports.index');
     }
 
     // Menampilkan detail laporan
     public function show(Report $report)
     {
         // Pastikan laporan milik pengguna yang sedang login
-        abort_if($report->user_id !== auth()->id, 403);
+        abort_if($report->user_id !==  Auth::id(), 403);
 
         return view('reports.show', compact('report'));
     }
@@ -56,7 +58,7 @@ public function index()
     // Menampilkan form untuk mengedit laporan
     public function edit(Report $report)
     {
-        abort_if($report->user_id !== auth()->id, 403);
+        abort_if($report->user_id !==  Auth::id(), 403);
 
         return view('reports.edit', compact('report'));
     }
@@ -64,7 +66,7 @@ public function index()
     // Memperbarui laporan
     public function update(Request $request, Report $report)
     {
-        abort_if($report->user_id !== auth()->id, 403);
+        abort_if($report->user_id !==  Auth::id(), 403);
 
         $request->validate([
             'type' => 'required|in:income,expense',
@@ -80,7 +82,7 @@ public function index()
     // Menghapus laporan
     public function destroy(Report $report)
     {
-        abort_if($report->user_id !== auth()->id, 403);
+        abort_if($report->user_id !==  Auth::id(), 403);
 
         $report->delete();
 

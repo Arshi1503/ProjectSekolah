@@ -13,7 +13,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware('auth', 'verified')->group(function () {
     Route::view('/', 'welcome')->name('home');
     Route::view('/tabungan', 'tabungan')->name('tabungan');
-    Route::view('/report', 'report')->name('report'); 
+    Route::view('/report', 'Reports.index')->name('report'); 
     Route::get('/dashboard', function () {
         return view('dashboard');})->name('dashboard');
 });
