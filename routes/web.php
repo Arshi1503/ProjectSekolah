@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Route;
 
 # Nama Route Route diatur
 Route::middleware(['auth'])->group(function () {
-    Route::resource('reports', ReportController::class);
+    Route::get('/reports', [ReportController::class, 'index'])->name('report.index');
+    Route::post('/reports', [ReportController::class, 'store'])->name('report.store');
 });
 
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::view('/', 'welcome')->name('home');
     Route::view('/tabungan', 'tabungan')->name('tabungan');
-    Route::view('/report', 'Reports.index')->name('report'); 
     Route::get('/dashboard', function () {
         return view('dashboard');})->name('dashboard');
 });

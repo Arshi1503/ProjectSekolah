@@ -9,17 +9,26 @@ use Illuminate\Http\Request;
 class ReportController extends Controller
 {
     // Menampilkan daftar laporan
-public function index()
-{
-    $reports = Report::where('user_id',Auth::id())
-        ->orderBy('created_at', 'desc')
-        ->get();
+        public function index()
+    {
+        $reports = Report::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
-    $incomes = $reports->where('type', 'income');
-    $expenses = $reports->where('type', 'expense');
+        $incomes = Report::where('user_id', Auth::id())
+            ->where('type', 'income')
+            ->sum('amount');
 
-    return view('reports.index', compact('reports', 'incomes', 'expenses'));
-}
+        $expenses = Report::where('user_id', Auth::id())
+            ->where('type', 'expense')
+            ->sum('amount');
+
+
+        return view('report.index', compact('reports', 'incomes', 'expenses'));
+    }
+
+    
+    
 
     // Menampilkan form untuk menambahkan laporan baru
     public function create()
@@ -43,7 +52,7 @@ public function index()
 
         session()->flash('success', 'Laporan berhasil disimpan!');
 
-        return redirect()->route('reports.index');
+        return redirect()->route('report.index');
     }
 
     // Menampilkan detail laporan
@@ -52,7 +61,7 @@ public function index()
         // Pastikan laporan milik pengguna yang sedang login
         abort_if($report->user_id !==  Auth::id(), 403);
 
-        return view('reports.show', compact('report'));
+        return view('report.show', compact('report'));
     }
 
     // Menampilkan form untuk mengedit laporan
@@ -60,7 +69,7 @@ public function index()
     {
         abort_if($report->user_id !==  Auth::id(), 403);
 
-        return view('reports.edit', compact('report'));
+        return view('report.edit', compact('report'));
     }
 
     // Memperbarui laporan
@@ -76,7 +85,7 @@ public function index()
 
         $report->update($request->only(['type', 'amount', 'description']));
 
-        return redirect()->route('reports.index')->with('success', 'Laporan berhasil diperbarui.');
+        return redirect()->route('report.index')->with('success', 'Laporan berhasil diperbarui.');
     }
 
     // Menghapus laporan
@@ -86,6 +95,6 @@ public function index()
 
         $report->delete();
 
-        return redirect()->route('reports.index')->with('success', 'Laporan berhasil dihapus.');
+        return redirect()->route('report.index')->with('success', 'Laporan berhasil dihapus.');
     }
 }
