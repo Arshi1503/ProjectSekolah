@@ -1,7 +1,14 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
+
+# Nama Route Route diatur
+Route::middleware(['auth'])->group(function () {
+    Route::resource('reports', ReportController::class);
+});
+
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::view('/', 'welcome')->name('home');
