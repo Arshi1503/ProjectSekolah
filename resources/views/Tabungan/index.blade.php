@@ -11,10 +11,12 @@
                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
                     {{ __('Statistik Tabungan') }}
                 </h3>
-                <canvas id="tabunganChart" width="400" height="200"></canvas>
+                <div class="w-full relative overflow-hidden h-96">
+                    <canvas id="tabunganChart" class="w-full h-full"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
-    @vite('resources/js/chart.js')
+    @vite(['resources/js/chart.js'])
 </x-app-layout>
