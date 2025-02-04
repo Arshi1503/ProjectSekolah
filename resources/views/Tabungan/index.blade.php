@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-7">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h3 class="text-lg font-semibold dark:text-gray-200">Saldo Akhir</h3>
+                <h3 class="text-xl font-semibold dark:text-gray-200">Saldo</h3>
                 <p class="text-blue-500 text-2xl font-bold">Rp{{ number_format($totalBalance, 0, ',', '.') }}</p>
             </div>
         </div>

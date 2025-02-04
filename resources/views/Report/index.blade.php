@@ -100,7 +100,9 @@
                         <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 shadow">
                             <p class="text-sm text-gray-600 dark:text-gray-300">{{ $report->created_at->format('l, d M Y') }}</p>
                             <p class="text-lg font-semibold">{{ ucfirst($report->type) }}</p>
-                            <p class="text-lg text-blue-500 font-bold">Rp{{ number_format($report->amount, 0, ',', '.') }}</p>
+                            <p class="text-lg font-bold {{ $report->type == 'income' ? 'text-green-500' : 'text-red-500' }}">
+                                Rp{{ number_format($report->amount, 0, ',', '.') }}
+                            </p>
                             <form action="{{ route('report.destroy', $report) }}" method="POST" class="mt-2">
                                 @csrf
                                 @method('DELETE')

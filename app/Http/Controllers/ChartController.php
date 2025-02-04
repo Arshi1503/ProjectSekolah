@@ -49,5 +49,4 @@ public function getChartData()
         ],
     ]);
 }
-
 }
