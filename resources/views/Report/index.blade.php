@@ -101,6 +101,13 @@
                             <p class="text-sm text-gray-600 dark:text-gray-300">{{ $report->created_at->format('l, d M Y') }}</p>
                             <p class="text-lg font-semibold">{{ ucfirst($report->type) }}</p>
                             <p class="text-lg text-blue-500 font-bold">Rp{{ number_format($report->amount, 0, ',', '.') }}</p>
+                            <form action="{{ route('report.destroy', $report) }}" method="POST" class="mt-2">
+                                @csrf
+                                @method('DELETE')
+                                <x-danger-button type="submit">
+                                    {{ __('Erase') }}
+                                </x-danger-button>
+                            </form>
                         </div>
                     @empty
                         <p class="text-center text-gray-500 dark:text-gray-400">{{ __('Belum ada laporan.') }}</p>
