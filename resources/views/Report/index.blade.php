@@ -13,7 +13,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 m-4">
+    <div class="py-12 mt-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
@@ -58,6 +58,7 @@
                                 <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-nowrap">{{ __('Tanggal') }}</th>
                                 <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-nowrap">{{ __('Proses') }}</th>
                                 <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-nowrap">{{ __('Jumlah') }}</th>
+                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 w-8 text-nowrap">{{ __('Aksi') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,6 +72,15 @@
                                     </td>
                                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-nowrap">
                                         Rp{{ number_format($report->amount, 0, ',', '.') }}
+                                    </td>
+                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-nowrap">
+                                        <form action="{{ route('report.destroy', $report) }}" method="POST" class="inline w-8">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-danger-button type="submit">
+                                                {{ __('Erase') }}
+                                            </x-danger-button>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty
